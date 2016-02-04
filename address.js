@@ -105,6 +105,90 @@ var newAddressEntry = {};
         when: function ( answers ) {
             return answers.addressType.indexOf('home') !== -1;
         }
+    },
+    {
+        name: 'workAddressLine1',
+        message: 'Write your work address line 1',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('work') !== -1;
+        }
+    },
+    {
+        name: 'workAddressLine2',
+        message: 'Write your work address line 2',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('work') !== -1;
+        }
+    },
+    {
+        name: 'workCity',
+        message: 'Write your work city',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('work') !== -1;
+        }
+    },
+    {
+        name: 'workProvince',
+        message: 'Write your work province',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('work') !== -1;
+        }
+    },
+    {
+        name: 'workPostalCode',
+        message: 'Write your work postal code',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('work') !== -1;
+        }
+    },
+    {
+        name: 'workCountry',
+        message: 'Write your work country',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('work') !== -1;
+        }
+    },
+    {
+        name: 'otherAddressLine1',
+        message: 'Write your other address line 1',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('other') !== -1;
+        }
+    },
+    {
+        name: 'otherAddressLine2',
+        message: 'Write your other address line 2',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('other') !== -1;
+        }
+    },
+    {
+        name: 'otherCity',
+        message: 'Write your other city',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('other') !== -1;
+        }
+    },
+    {
+        name: 'otherProvince',
+        message: 'Write your other province',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('other') !== -1;
+        }
+    },
+    {
+        name: 'otherPostalCode',
+        message: 'Write your other postal code',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('other') !== -1;
+        }
+    },
+    {
+        name: 'otherCountry',
+        message: 'Write your other country',
+        when: function ( answers ) {
+            return answers.addressType.indexOf('other') !== -1;
+        }
     }
 
 ];
@@ -169,7 +253,19 @@ inquirer.prompt(simpleQuestions, function( answers ) {
     if (answers.homePostalCode) newAddressEntry.homePostalCode = answers.homePostalCode;
     if (answers.homeCountry) newAddressEntry.homeCountry = answers.homeCountry;
     
+    if (answers.workAddressLine1) newAddressEntry.workAddressLine1 = answers.workAddressLine1;
+    if (answers.workAddressLine2) newAddressEntry.workAddressLine2 = answers.workAddressLine2;
+    if (answers.workCity) newAddressEntry.workCity = answers.workCity;
+    if (answers.workProvince) newAddressEntry.workProvince = answers.workProvince;
+    if (answers.workPostalCode) newAddressEntry.workPostalCode = answers.workPostalCode;
+    if (answers.workCountry) newAddressEntry.workCountry = answers.workCountry;
     
+    if (answers.otherAddressLine1) newAddressEntry.otherAddressLine1 = answers.otherAddressLine1;
+    if (answers.otherAddressLine2) newAddressEntry.otherAddressLine2 = answers.otherAddressLine2;
+    if (answers.otherCity) newAddressEntry.otherCity = answers.otherCity;
+    if (answers.otherProvince) newAddressEntry.otherProvince = answers.otherProvince;
+    if (answers.otherPostalCode) newAddressEntry.otherPostalCode = answers.otherPostalCode;
+    if (answers.otherCountry) newAddressEntry.otherCountry = answers.otherCountry;
     
     
 
