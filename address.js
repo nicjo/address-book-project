@@ -265,6 +265,8 @@ inquirer.prompt(simpleQuestions, function( answers ) {
 	newAddressEntry.lastName = answers.lastName;
 	newAddressEntry.birthday = answers.birthday;
 	newAddressEntry.emailType = answers.emailType;
+	newAddressEntry.phoneType = answers.phoneType;
+	newAddressEntry.addressType = answers.addressType;
 // 	newAddressEntry.emailType = {work: '', home: '', other: ''} ;
 // 	newAddressEntry.emailType.email = answers.emailType[answersect.email];
 // 	; {type: 'email', email: ''}
@@ -303,7 +305,7 @@ inquirer.prompt(simpleQuestions, function( answers ) {
 
 
 	
-// 	console.log(answers);
+	console.log(answers);
 	console.log(newAddressEntry);
 	displayTable(newAddressEntry)
 	
@@ -323,21 +325,20 @@ function displayTable (newAddressEntry) {
 // push firstname and lastname
     
    table.push(
-            ['First Name', newAddressEntry.firstName],
-            ['Last Name', newAddressEntry.lastName]
+            ['First Name:', newAddressEntry.firstName],
+            ['Last Name:', newAddressEntry.lastName]
             )
             
 // push birthday
     if (newAddressEntry.birthday) {
         
          table.push(
-            ['Birthday', newAddressEntry.birthday]
+            ['Birthday:', newAddressEntry.birthday]
             )
     }
         
 // push home, work or other email
-    
-     var type = []
+   
     newAddressEntry.emailType.forEach( function(type) {
        
         
@@ -349,7 +350,88 @@ function displayTable (newAddressEntry) {
         
     });
     
+    
+// push home, work or other phone number
+    
+    newAddressEntry.phoneType.forEach( function(type) {
+       
         
+        if (newAddressEntry[type + 'Phone']) {
+            table.push(
+                [type + ' Phone:', newAddressEntry[type + 'Phone']]
+            );
+        }
+        
+    });
+    
+
+// push home, work or other address
+    
+    newAddressEntry.addressType.forEach( function(type) {
+       
+        
+        if (newAddressEntry[type + 'AddressLine1']) {
+            table.push(
+                [type + ' Address Line 1:', newAddressEntry[type + 'AddressLine1']]
+            );
+        }
+        
+    });
+    
+        newAddressEntry.addressType.forEach( function(type) {
+       
+        
+        if (newAddressEntry[type + 'AddressLine2']) {
+            table.push(
+                [type + ' Address Line 2:', newAddressEntry[type + 'AddressLine2']]
+            );
+        }
+        
+    });
+    
+        newAddressEntry.addressType.forEach( function(type) {
+       
+        
+        if (newAddressEntry[type + 'City']) {
+            table.push(
+                [type + ' City:', newAddressEntry[type + 'City']]
+            );
+        }
+        
+    });
+    
+        newAddressEntry.addressType.forEach( function(type) {
+       
+        
+        if (newAddressEntry[type + 'Province']) {
+            table.push(
+                [type + ' Province:', newAddressEntry[type + 'Province']]
+            );
+        }
+        
+    });
+    
+        newAddressEntry.addressType.forEach( function(type) {
+       
+        
+        if (newAddressEntry[type + 'PostalCode']) {
+            table.push(
+                [type + ' Postal Code:', newAddressEntry[type + 'PostalCode']]
+            );
+        }
+        
+    });
+    
+        newAddressEntry.addressType.forEach( function(type) {
+       
+        
+        if (newAddressEntry[type + 'Country']) {
+            table.push(
+                [type + ' Country:', newAddressEntry[type + 'Country']]
+            );
+        }
+        
+    });
     
     
 
