@@ -189,6 +189,33 @@ var newAddressEntry = {};
         when: function ( answers ) {
             return answers.addressType.indexOf('other') !== -1;
         }
+    },
+    {
+        type: 'checkbox',
+        name: 'phoneType',
+        message: 'Choose a phone type',
+        choices: ['landline', 'cellular', 'fax']
+    },
+    {
+        name: 'landlinePhone',
+        message: 'Write your landline phone number',
+        when: function ( answers ) {
+            return answers.phoneType.indexOf('landline') !== -1;
+        }
+    },
+    {
+        name: 'cellularPhone',
+        message: 'Write your cellular phone number',
+        when: function ( answers ) {
+            return answers.phoneType.indexOf('cellular') !== -1;
+        }
+    },
+    {
+        name: 'faxPhone',
+        message: 'Write your fax phone number',
+        when: function ( answers ) {
+            return answers.phoneType.indexOf('fax') !== -1;
+        }
     }
 
 ];
@@ -237,6 +264,7 @@ inquirer.prompt(simpleQuestions, function( answers ) {
 	newAddressEntry.firstName = answers.firstName;
 	newAddressEntry.lastName = answers.lastName;
 	newAddressEntry.birthday = answers.birthday;
+	newAddressEntry.emailType = answers.emailType;
 // 	newAddressEntry.emailType = {work: '', home: '', other: ''} ;
 // 	newAddressEntry.emailType.email = answers.emailType[answersect.email];
 // 	; {type: 'email', email: ''}
@@ -267,20 +295,76 @@ inquirer.prompt(simpleQuestions, function( answers ) {
     if (answers.otherPostalCode) newAddressEntry.otherPostalCode = answers.otherPostalCode;
     if (answers.otherCountry) newAddressEntry.otherCountry = answers.otherCountry;
     
-    
+    if (answers.landlinePhone) newAddressEntry.landlinePhone = answers.landlinePhone;
+    if (answers.cellularPhone) newAddressEntry.cellularPhone = answers.cellularPhone;
+    if (answers.faxPhone) newAddressEntry.faxPhone = answers.faxPhone;
+
 
 
 
 	
-	console.log(answers);
+// 	console.log(answers);
 	console.log(newAddressEntry);
-
+	displayTable(newAddressEntry)
+	
 });
     
 
 
+function displayTable (newAddressEntry) {
+    
+    var table = new Table();
+ 
+         
+//      table.push(newAddressEntry.split("," )) ;   
+ 
+    // table.push(newAddressEntry);
+    
+// push firstname and lastname
+    
+   table.push(
+            ['First Name', newAddressEntry.firstName],
+            ['Last Name', newAddressEntry.lastName]
+            )
+            
+// push birthday
+    if (newAddressEntry.birthday) {
+        
+         table.push(
+            ['Birthday', newAddressEntry.birthday]
+            )
+    }
+        
+// push home, work or other email
+    
+     var type = []
+    newAddressEntry.emailType.forEach( function(type) {
+       
+        
+        if (newAddressEntry[type + 'Email']) {
+            table.push(
+                [type + ' Email:', newAddressEntry[type + 'Email']]
+            );
+        }
+        
+    });
+    
+        
+    
+    
 
+
+    // if (newAddressEntry.homeEmail) {
+    //     table.push(
+    //         ['Home Email', newAddressEntry.homeEmail]
+    //         )
+    // }
+   
+       console.log(table.toString());
+
+ }
 
     
     
+
     
