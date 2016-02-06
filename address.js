@@ -1,31 +1,35 @@
 var inquirer = require("inquirer");
 var Table = require('cli-table');
 
-var addressBook = {};
+var addressBook = [];
 
 var newAddressEntry = {};
 
-// var mainMenuQuestions = [
-//     {
-//         type: 'list',
-//         name: 'mainMenu',
-//         message: 'Choose one of the following options:',
-//         choices: ['Create a new address book entry', 'Search for existing address book entries', 'Exit the program']  
-//     }
+var mainMenuQuestions = [
+    {
+        type: 'list',
+        name: 'mainMenu',
+        message: 'Choose one of the following options:',
+        choices: ['Create a new address book entry', 'Search for existing address book entries', 'Exit the program']  
+    }
     
-// ]
+]
 
-    
-    
-    var simpleQuestions = [
+function returnQuestions (defaultAnswers){
+    if (!defaultAnswers) {
+        defaultAnswers = {}
+    }
+    return [
 
     { 
         name: 'firstName', 
-        message: 'Write your first name'
+        message: 'Write your first name',
+        default: defaultAnswers.firstName
     },
     {
         name: 'lastName',
-        message: 'Write your last name'
+        message: 'Write your last name',
+        default: defaultAnswers.lastName
     },
     {
         name: 'birthday',
@@ -219,48 +223,24 @@ var newAddressEntry = {};
     }
 
 ];
+}
 
-var emailQuestions = [
     
-    {
-        type: 'checkbox',
-        name: 'emailType',
-        message: 'Choose an email type',
-        choices: ['work', 'home', 'other']
-    },
+ 
+
+
+var main = function(){
+    inquirer.prompt(mainMenuQuestions, function (mainAnswers) {
+    console.log(mainAnswers)
+    mainMenuQuestions.mainmenu = mainAnswers.mainMenu
     
-    ]
-
-// var addressQuestions = [
-//     {
-//         name: 'address1',
-//         message: 'Address Line 1'
-//     },
-//     {
-//         name: 'address2',
-//         message: 'Address Line 2 (optional)'
-//     },
-//     {
-//         name: 'city',
-//         message: 'City'
-//     },
-//     {
-//         name: 'province',
-//         message: 'Province'
-//     },
-//     {
-//         name: 'postalCode',
-//         message: 'Postal Code'
-//     },
-//     {
-//         name: 'country',
-//         message: 'Country'
-//     }
-   
-// ]
-
-
-inquirer.prompt(simpleQuestions, function( answers ) {
+    // if (mainMenuQuestions.mainmenu.indexOf('Create a new address book entry')) {return addressEntry;}
+    // if (mainMenuQuestions.mainmenu[1]) return searchFunction;
+    if (mainMenuQuestions.mainmenu.indexOf('Exit the program') !== -1) {return;}
+    
+    else {
+    var addressEntry = inquirer.prompt(returnQuestions(), function( answers ) {
+        
 	newAddressEntry.firstName = answers.firstName;
 	newAddressEntry.lastName = answers.lastName;
 	newAddressEntry.birthday = answers.birthday;
@@ -305,11 +285,67 @@ inquirer.prompt(simpleQuestions, function( answers ) {
 
 
 	
-	console.log(answers);
-	console.log(newAddressEntry);
-	displayTable(newAddressEntry)
-	
+// 	console.log(answers);
+// 	console.log(newAddressEntry);
+	addressBook.push(newAddressEntry);
+	console.log(addressBook);
+	displayTable(newAddressEntry);
+
+    var afterAddress = [
+    {
+        type: 'list',
+        name: 'editMenu',
+        message: 'What would you like to do?',
+        choices: [{name: 'edit'}, {name: 'delete'}, {name: 'back'}]  
+    }
+    
+]
+
+	var nextAction = inquirer.prompt(afterAddress, function( editAnswer ) {
+	    console.log(editAnswer);
+	    console.log(afterAddress);
+	    if (editAnswer.editMenu === 'back') {
+	        return main();
+	    } else if (afterAddress.editAnswer.indexOf('Delete this entry') !== -1){
+	        //return something that deletes the entry;
+	        console.log('delete this entry motherfucker')
+	    } else {
+	        //return something that edits the entry and gives current values as default.
+	        console.log('edit this entry motherfucker')
+	        
+	    }
+	});
+
 });
+} 
+}
+
+);
+}
+
+main();
+
+// var searchAddress = function (searchTerm) {
+    
+//     var searchQuestion = [
+//     {
+//         type: 'input',
+//         name: 'SearchPrompt',
+//         message: 'Please enter a name to search for:',
+//         validate: function (searchTerm)  {
+//             if (searchTerm > (searchTerm.length === 2)) {
+//                 return true;
+//             } else { return "please enter 3 or more characters"}
+//         }  
+//     }
+    
+// ]
+    
+//     inquirer.prompt(searchQuestion, function (searchTerm) {
+//         console.log(searchTerm)
+//     });
+// }
+
     
 
 
@@ -372,75 +408,12 @@ function displayTable (newAddressEntry) {
         
         if (newAddressEntry[type + 'AddressLine1']) {
             table.push(
-                [type + ' Address Line 1:', newAddressEntry[type + 'AddressLine1']]
+                ['Addresses:', type + ':' + '\n' + newAddressEntry[type + 'AddressLine1'] + '\n' + newAddressEntry[type + 'AddressLine2'] + '\n' + newAddressEntry[type + 'City'] + '\n' + newAddressEntry[type + 'Province'] + '\n' + newAddressEntry[type + 'PostalCode'] + '\n' + newAddressEntry[type + 'Country']]
             );
         }
         
     });
     
-        newAddressEntry.addressType.forEach( function(type) {
-       
-        
-        if (newAddressEntry[type + 'AddressLine2']) {
-            table.push(
-                [type + ' Address Line 2:', newAddressEntry[type + 'AddressLine2']]
-            );
-        }
-        
-    });
-    
-        newAddressEntry.addressType.forEach( function(type) {
-       
-        
-        if (newAddressEntry[type + 'City']) {
-            table.push(
-                [type + ' City:', newAddressEntry[type + 'City']]
-            );
-        }
-        
-    });
-    
-        newAddressEntry.addressType.forEach( function(type) {
-       
-        
-        if (newAddressEntry[type + 'Province']) {
-            table.push(
-                [type + ' Province:', newAddressEntry[type + 'Province']]
-            );
-        }
-        
-    });
-    
-        newAddressEntry.addressType.forEach( function(type) {
-       
-        
-        if (newAddressEntry[type + 'PostalCode']) {
-            table.push(
-                [type + ' Postal Code:', newAddressEntry[type + 'PostalCode']]
-            );
-        }
-        
-    });
-    
-        newAddressEntry.addressType.forEach( function(type) {
-       
-        
-        if (newAddressEntry[type + 'Country']) {
-            table.push(
-                [type + ' Country:', newAddressEntry[type + 'Country']]
-            );
-        }
-        
-    });
-    
-    
-
-
-    // if (newAddressEntry.homeEmail) {
-    //     table.push(
-    //         ['Home Email', newAddressEntry.homeEmail]
-    //         )
-    // }
    
        console.log(table.toString());
 
